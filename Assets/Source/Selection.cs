@@ -157,7 +157,7 @@ public class Selection {
     public Selection style(string attributeName, Func<DataObject,int,float[]> func)
     {
 		for(int i=0 ; i<this.dataElements.Count ; i++){
-			System.Object val = func (this.dataElements [i], i);
+			float[] val = func (this.dataElements [i], i);
 			setStyle(attributeName, val, this.visualElements[i]);
         }
 		return this;
@@ -167,7 +167,8 @@ public class Selection {
     {
         switch(attributeName){
 		case "fill": 
-			visualObject.GetComponent<Renderer>().material.color=new Color(val[0],val[1], val[2]);
+            Console.WriteLine("FILL " + val[0], val[1], val[2]); 
+    		visualObject.GetComponent<Renderer>().material.color = new Color(val[0],val[1], val[2]);
 			break;
 	    }
     }

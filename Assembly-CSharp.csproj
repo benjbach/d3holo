@@ -45,13 +45,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Source\BarChart.cs" />
      <Compile Include="Assets\Source\Country.cs" />
-     <Compile Include="Assets\Source\Cubix.cs" />
-     <Compile Include="Assets\Source\Scatterplot.cs" />
      <Compile Include="Assets\Source\d3holo\DataObject.cs" />
      <Compile Include="Assets\Source\d3holo\Selection.cs" />
      <Compile Include="Assets\Source\d3holo\d4.cs" />
+     <Compile Include="Assets\Source\visualizations\BarChart.cs" />
+     <Compile Include="Assets\Source\visualizations\Cubix.cs" />
+     <Compile Include="Assets\Source\visualizations\Scatterplot.cs" />
+     <Compile Include="Assets\Source\visualizations\Scatterplot_gapminder.cs" />
  <Reference Include="UnityEngine.Networking">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
  </Reference>

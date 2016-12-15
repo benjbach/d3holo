@@ -322,6 +322,7 @@ public class Selection {
             UnityEngine.GameObject go = UnityEngine.GameObject.CreatePrimitive(UnityEngine.PrimitiveType.Sphere);
             //scales it down to 1cm
             go.transform.localScale *= DEFAULT_PRIMITIVE_SIZE;
+            AddMouseClickHandler(go);
             //add the created GameObject to the visual elements
             visualElements.Add(go);
 
@@ -345,6 +346,25 @@ public class Selection {
             visualElements.Add(go);
         }
     }
+
+
+
+    private void AddMouseClickHandler(UnityEngine.GameObject go)
+    {
+
+        InteractiveVisualObject myScript; // declare the reference.
+        myScript = go.AddComponent( typeof ( InteractiveVisualObject ) ) as InteractiveVisualObject;
+        //Or using Generics ( requires using System.Collections.Generics )
+        // myScript = go.AddComponent<InteractiveVisualObject>();
+
+    }
+
+
+
+
+    ////////////////////////////
+    /// INTERACTION LISTENER /// 
+    ////////////////////////////
 
 
 }

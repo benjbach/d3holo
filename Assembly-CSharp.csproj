@@ -45,6 +45,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Source\BarChart.cs" />
      <Compile Include="Assets\Source\Country.cs" />
      <Compile Include="Assets\Source\Cubix.cs" />
      <Compile Include="Assets\Source\Scatterplot.cs" />

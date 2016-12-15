@@ -5,8 +5,6 @@ using System.Collections;
 public class Cubix : MonoBehaviour {
 
 
-
-
 	// DATA PARAMETERS
 	int NODE_NUM = 10;
 	int TIME_NUM = 20;
@@ -22,7 +20,6 @@ public class Cubix : MonoBehaviour {
 	
 
 	// Interaction states
-
 	int _activeTimeSlice = 4;
 	int _activeNodeSlice = 4;
 	int PLANE_Z = 0;

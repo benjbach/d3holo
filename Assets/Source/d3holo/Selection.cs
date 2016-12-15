@@ -91,7 +91,26 @@ public class Selection {
 		case "y": setPosY(visualObject, Convert.ToSingle(val)); break;
 		case "z": setPosZ(visualObject, Convert.ToSingle(val)); break;                           
 		case "r": visualObject.transform.localScale = new Vector3(Convert.ToSingle(val), Convert.ToSingle(val), Convert.ToSingle(val)); break;                           
-		case "scale": visualObject.transform.localScale = new Vector3(Convert.ToSingle(val), Convert.ToSingle(val), Convert.ToSingle(val)); break;                           
+		case "scale": visualObject.transform.localScale = new Vector3(
+            visualObject.transform.localScale.x * Convert.ToSingle(val), 
+            visualObject.transform.localScale.y * Convert.ToSingle(val), 
+            visualObject.transform.localScale.z * Convert.ToSingle(val)); 
+            break;                           
+    	case "height": visualObject.transform.localScale = new Vector3(
+                visualObject.transform.localScale.x, 
+                Convert.ToSingle(val), 
+                visualObject.transform.localScale.z); 
+                break;                           
+    	case "width": visualObject.transform.localScale = new Vector3(
+                Convert.ToSingle(val), 
+                visualObject.transform.localScale.y, 
+                visualObject.transform.localScale.z); 
+                break;                           
+    	case "depth": visualObject.transform.localScale = new Vector3(
+                visualObject.transform.localScale.x, 
+                visualObject.transform.localScale.y, 
+                Convert.ToSingle(val));
+                break;                           
         }
     }
 	private void setPosX(GameObject visualObject, float val)

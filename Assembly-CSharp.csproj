@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Source\Country.cs" />
+     <Compile Include="Assets\Source\d3holo\CameraMovement.cs" />
      <Compile Include="Assets\Source\d3holo\DataObject.cs" />
      <Compile Include="Assets\Source\d3holo\Selection.cs" />
      <Compile Include="Assets\Source\d3holo\d4.cs" />

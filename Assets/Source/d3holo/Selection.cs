@@ -56,7 +56,7 @@ public class Selection {
             case "text": createText(); break;
             case "polygon": createMeshes(); break;
             case "mesh": createPolygons(); break;
-            default: Console.WriteLine("Shape" + _shape + "does not exist.");break; 
+            // default: Console.WriteLine("Shape" + _shape + "does not exist.");break; 
         }
 
         this.shape = _shape;
@@ -186,7 +186,7 @@ public class Selection {
     {
         switch(attributeName){
 		case "fill": 
-            Console.WriteLine("FILL " + val[0], val[1], val[2]); 
+            // Console.WriteLine("FILL " + val[0], val[1], val[2]); 
     		visualObject.GetComponent<Renderer>().material.color = new Color(val[0],val[1], val[2]);
 			break;
 	    }

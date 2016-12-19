@@ -4,7 +4,6 @@ public class InteractiveVisualObject : MonoBehaviour {
 
     Ray ray;
     RaycastHit hit;
-    Function 
      
     void Update()
     {

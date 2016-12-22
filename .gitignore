@@ -1,10 +1,10 @@
- Temp/*
- Library/*
- Obj/*
+Temp/*
+Library/*
+Obj/*
  
- *.csproj
- *.unityproj
- *.sln
- *.user
- *.userprefs
- *.DS_store
+*.csproj
+*.unityproj
+*.sln
+*.user
+*.userprefs
+*.DS_store

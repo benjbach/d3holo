@@ -349,6 +349,27 @@ public class Selection {
 
 
 
+
+
+    ////////////
+    // GETTER //
+    ////////////
+
+    public List<UnityEngine.GameObject> getVisualElements()
+    {
+        return new List<UnityEngine.GameObject>(visualElements);
+    }
+
+    public List<DataObject> getDataObjects()
+    {
+        return new List<DataObject>(dataElements);
+    }
+
+    ////////////////////////////
+    /// INTERACTION LISTENER /// 
+    ////////////////////////////
+
+
     private void AddMouseClickHandler(UnityEngine.GameObject go)
     {
 
@@ -358,13 +379,6 @@ public class Selection {
         // myScript = go.AddComponent<InteractiveVisualObject>();
 
     }
-
-
-
-
-    ////////////////////////////
-    /// INTERACTION LISTENER /// 
-    ////////////////////////////
 
 
 }

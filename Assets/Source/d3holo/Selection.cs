@@ -92,9 +92,24 @@ public class Selection {
 		case "z": setPosZ(visualObject, Convert.ToSingle(val)); break;                           
 		case "r": visualObject.transform.localScale = new Vector3(Convert.ToSingle(val), Convert.ToSingle(val), Convert.ToSingle(val)); break;                           
 		case "scale": visualObject.transform.localScale = new Vector3(
-            visualObject.transform.localScale.x * Convert.ToSingle(val), 
-            visualObject.transform.localScale.y * Convert.ToSingle(val), 
-            visualObject.transform.localScale.z * Convert.ToSingle(val)); 
+            Convert.ToSingle(val), 
+            Convert.ToSingle(val), 
+            Convert.ToSingle(val)); 
+            break;                           
+    	case "scaleX": visualObject.transform.localScale = new Vector3(
+            Convert.ToSingle(val), 
+            visualObject.transform.localScale.y, 
+            visualObject.transform.localScale.z); 
+            break;                           
+    	case "scaleY": visualObject.transform.localScale = new Vector3(
+            visualObject.transform.localScale.x, 
+            Convert.ToSingle(val), 
+            visualObject.transform.localScale.z); 
+            break;                           
+    	case "scaleZ": visualObject.transform.localScale = new Vector3(
+            visualObject.transform.localScale.x, 
+            visualObject.transform.localScale.y,
+            Convert.ToSingle(val)); 
             break;                           
     	case "height": visualObject.transform.localScale = new Vector3(
                 visualObject.transform.localScale.x, 
@@ -363,6 +378,15 @@ public class Selection {
     public List<DataObject> getDataObjects()
     {
         return new List<DataObject>(dataElements);
+    }
+
+    public DataObject getDataObject(int index)
+    {
+        return dataElements[index];
+    }
+    public DataObject getDataObject(GameObject visualObject)
+    {
+        return dataElements[visualElements.IndexOf(visualObject)];
     }
 
     ////////////////////////////

@@ -1,13 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using Vuforia;
 
 public class Cubix : MonoBehaviour {
 
 
 	// DATA PARAMETERS
-	int NODE_NUM = 10;
-	int TIME_NUM = 20;
+	int NODE_NUM = 6;
+	int TIME_NUM = 6;
 		
 	
 
@@ -36,6 +37,18 @@ public class Cubix : MonoBehaviour {
 
 	List<GameObject> cuttingplaneCorners = new List<GameObject>(); 
 	List<DataObject> intersectedObjects = new List<DataObject>();
+	GameObject cursorPosition;
+	GameObject handPosition;
+	GameObject line1;
+	GameObject line2;
+
+	GameObject currentViewAnchor;
+
+	List<Selection> detachedViews = new List<Selection>();
+
+
+	StateManager sm; 	
+	IEnumerable<TrackableBehaviour> activeTrackables;
 
 	void Start () 
 	{
@@ -54,30 +67,40 @@ public class Cubix : MonoBehaviour {
 				.style("opacity",  (d,i) => getOpacity(d))
 				;
 
-			// cuttingPlaneCorners.Add( makeDataObject(0,0,0) );
-			// cuttingPlaneCorners.Add( makeDataObject(0,0,0) );
-			// cuttingPlaneCorners.Add( makeDataObject(0,0,0) );
-			// cuttingPlaneCorners.Add( makeDataObject(0,0,0) );
+		// cuttingPlaneCorners.Add( makeDataObject(0,0,0) );
+		// cuttingPlaneCorners.Add( makeDataObject(0,0,0) );
+		// cuttingPlaneCorners.Add( makeDataObject(0,0,0) );
+		// cuttingPlaneCorners.Add( makeDataObject(0,0,0) );
 
-			// cuttingPlane = d4.selectAll()
-			// 	.data(cuttingPlaneCorners)
-			// 	.append("sphere")
-			// 		.attr("r", CELL_UNIT*2)
-			// 		.style("fill", new float[]{1, 0, 0})
-			// 		;
+		// cuttingPlane = d4.selectAll()
+		// 	.data(cuttingPlaneCorners)
+		// 	.append("sphere")
+		// 		.attr("r", CELL_UNIT*2)
+		// 		.style("fill", new float[]{1, 0, 0})
+		// 		;
 
-			// Attach cutting 
-			cuttingplaneCorners.Add(GameObject.Find("CuttingplaneCorner1"));
-			cuttingplaneCorners.Add(GameObject.Find("CuttingplaneCorner2"));
-			cuttingplaneCorners.Add(GameObject.Find("CuttingplaneCorner3"));
-			cuttingplaneCorners.Add(GameObject.Find("CuttingplaneCorner4"));
+		// Attach cutting 
+		cuttingplaneCorners.Add(GameObject.Find("CuttingplaneCorner1"));
+		cuttingplaneCorners.Add(GameObject.Find("CuttingplaneCorner2"));
+		cuttingplaneCorners.Add(GameObject.Find("CuttingplaneCorner3"));
+		cuttingplaneCorners.Add(GameObject.Find("CuttingplaneCorner4"));
+
+		cursorPosition = GameObject.Find("AR-Cursor"); 			
+		handPosition = GameObject.Find("AR-Hand"); 			
+
+		line1 = GameObject.Find("AR-line1"); 			
+		line2 = GameObject.Find("AR-line2"); 			
 
 
-		}
+		sm = TrackerManager.Instance.GetStateManager ();
+
+
+	}
 	
 	// Update is called once per frame
 	void Update () {
 
+		this.intersectedObjects = new List<DataObject>();
 
 		// if (Input.GetKey("up")){
 		// 	_activeTimeSlice--;
@@ -115,25 +138,99 @@ public class Cubix : MonoBehaviour {
 		// cuttingPlaneCorners[2] = makeDataObject(-10f, -10f, planeZ);
 		// cuttingPlaneCorners[3] = makeDataObject(10f, -10f, planeZ);
 
-		this.intersectedObjects = atelier.cuttingPlane(
-			cuttingplaneCorners[0].transform.position,
-			cuttingplaneCorners[1].transform.position,
-			cuttingplaneCorners[2].transform.position,
-			cubeCells, 
-			CELL_UNIT);
+		// TEST INTERSECTIONS WITH AR MARKERS
 
-		// cuttingPlane
-		// 	.data(cuttingPlaneCorners);
+		// Get active tracking targets: 
+		// Get the Vuforia StateManager
+        
+        // Query the StateManager to retrieve the list of
+        // currently 'active' trackables 
+        //(i.e. the ones currently being tracked by Vuforia)
+        activeTrackables = sm.GetActiveTrackableBehaviours ();
+ 
+       	// Iterate through the list of active trackables
+        // Debug.Log ("List of trackables currently active (tracked): ");
+
+
+		// test line
+		// // if(this.intersectedObjects.Count == 0){
+			// this.intersectedObjects = atelier.cuttingLine(
+			// 	line1.transform.position,
+			// 	line2.transform.position,
+			// 	cubeCells, 
+			// 	CELL_UNIT);			
+		// // }	
+
+		bool handFound = false;
+		bool cursorFound = false;
+		foreach (TrackableBehaviour tb in activeTrackables) {
+
+		 	if(tb.TrackableName == "hand") 
+				handFound = true;
+			if(tb.TrackableName == "cursor") 
+				cursorFound = true;
+
+		}
 		
-		// cuttingPlane
-		// 	.attr("x", (d,i)=> CELL_UNIT * d.Float("x"))
-		// 	.attr("y", (d,i)=> CELL_UNIT * d.Float("y"))
-		// 	.attr("z", (d,i)=> CELL_UNIT * d.Float("z"))
-		// 	;
+		// test single cursor
+		if(cursorFound && !handFound){
+			this.intersectedObjects = atelier.point(
+				cursorPosition.transform.position,
+				cubeCells, 
+				CELL_UNIT);			
+			currentViewAnchor = cursorPosition;
+		}
+		// else
+		// This is super slow! 
+		// if(cursorFound && handFound)
+		// {
+		// 	this.intersectedObjects = atelier.cuttingLine(
+		// 		cursorPosition.transform.position,
+		// 		handPosition.transform.position,
+		// 		cubeCells, 
+		// 		CELL_UNIT);	
+		// }	
+
+		// test cutting plane
+		if(this.intersectedObjects.Count == 0){
+			this.intersectedObjects = atelier.cuttingPlane(
+				cuttingplaneCorners[0].transform.position,
+				cuttingplaneCorners[1].transform.position,
+				cuttingplaneCorners[2].transform.position,
+				cubeCells, 
+				CELL_UNIT);
+			currentViewAnchor = cuttingplaneCorners[0];
+		}
 
 		cubeCells
 			.style("opacity",  (d,i) => getOpacity(d));
 
+
+		// See if screenshot key is down: 
+		if (Input.GetKey("s") && this.intersectedObjects.Count > 0){
+			print("SCREENSHOT");
+
+			// create new selection from currently higlhighted elements. 
+			Selection newView = d4.selectAll()
+			 	.data(this.intersectedObjects)
+				.append("cube")
+					.attr("scale", (d,i) => getScale(d))
+					.attr("scaleZ", (d,i) => CELL_UNIT * .01f)
+					.attr("x", (d,i) => getXPos(d))
+					.attr("y", (d,i) => getYPos(d))
+					.attr("z", (d,i) => getZPos(d))
+					.style("fill", (d,i) => getColor(d))
+					.style("opacity",  (d,i) => getOpacity(d))
+					;
+
+			List<GameObject> visualObjects = newView.getVisualElements();
+			for(int i = 0 ; i < visualObjects.Count; i++ ){
+				visualObjects[i].transform.parent = currentViewAnchor.transform; 
+			}
+
+			this.detachedViews.Add(newView);
+				
+		}
 
 	}
 	
@@ -198,7 +295,7 @@ public class Cubix : MonoBehaviour {
 		// 	return CELL_OPACITY_GHOST;
 		// }
 
-		// print(">>>" + this.intersectedObjects.Count + ", " +  d);
+
 		if(this.intersectedObjects.Contains(d))
 			return CELL_OPACITY;
 		

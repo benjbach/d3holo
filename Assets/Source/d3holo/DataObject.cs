@@ -30,7 +30,7 @@ public class DataObject{
 		}
 		catch(System.Exception ex) {
 			val = 0;
-		}  		
+		}  		 
 		return val;
 	}
 

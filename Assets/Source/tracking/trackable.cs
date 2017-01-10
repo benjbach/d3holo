@@ -11,7 +11,7 @@ public class trackable : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 	
-        print(">>>"  + transform.position.x +","+  transform.position.y +","+ transform.position.z);
+        // print(">>>"  + transform.position.x +","+  transform.position.y +","+ transform.position.z);
 		
 	}
 }
